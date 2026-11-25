@@ -9,7 +9,7 @@ struct FinanceSettlementModuleSellerPayoutFormView: View {
     var keys: [String] = []
     @State private var loaded = false
     @State private var sellerId = ""
-    @State private var payoutPeriodId = ""
+    @State private var payoutPeriodIdinteger = ""
     @State private var totalEarnings = ""
     @State private var totalCommission = ""
     @State private var totalAdjustments = ""
@@ -35,7 +35,7 @@ struct FinanceSettlementModuleSellerPayoutFormView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
                     NumberField(label: "seller Id", text: $sellerId)
-                    PortalForeignKeyField(label: "payout Period", module: "finance-settlement-module", model: "payout-periods", text: $payoutPeriodId)
+                    FieldLabel(label: "payout Period Idinteger") { TextField("payout Period Idinteger", text: $payoutPeriodIdinteger) }
                     NumberField(label: "total Earnings", text: $totalEarnings, decimal: true)
                     NumberField(label: "total Commission", text: $totalCommission, decimal: true)
                     NumberField(label: "total Adjustments", text: $totalAdjustments, decimal: true)
@@ -73,7 +73,7 @@ struct FinanceSettlementModuleSellerPayoutFormView: View {
             let output = try await client.SellerPayoutsInsert(body: .json(.init(
                 id: 0,
                 sellerId: Int32(sellerId) ?? 0,
-                payoutPeriodId: Int32(payoutPeriodId) ?? 0,
+                payoutPeriodIdinteger: payoutPeriodIdinteger,
                 totalEarnings: Double(totalEarnings) ?? 0,
                 totalCommission: Double(totalCommission) ?? 0,
                 totalAdjustments: Double(totalAdjustments) ?? 0,
@@ -93,7 +93,7 @@ struct FinanceSettlementModuleSellerPayoutFormView: View {
             let output = try await client.SellerPayoutsUpdate(path: .init(id: Int32(keys[0]) ?? 0), body: .json(.init(
                 id: Int32(keys[0]) ?? 0,
                 sellerId: Int32(sellerId) ?? 0,
-                payoutPeriodId: Int32(payoutPeriodId) ?? 0,
+                payoutPeriodIdinteger: payoutPeriodIdinteger,
                 totalEarnings: Double(totalEarnings) ?? 0,
                 totalCommission: Double(totalCommission) ?? 0,
                 totalAdjustments: Double(totalAdjustments) ?? 0,
@@ -128,7 +128,7 @@ struct FinanceSettlementModuleSellerPayoutFormView: View {
             guard case .ok(let ok) = output else { throw APIFailure.from(status: 0) }
             let item = try ok.body.json
             sellerId = item.sellerId.map { PortalNumber.integer($0) } ?? ""
-            payoutPeriodId = item.payoutPeriodId.map { PortalNumber.integer($0) } ?? ""
+            payoutPeriodIdinteger = item.payoutPeriodIdinteger ?? ""
             totalEarnings = item.totalEarnings.map { PortalNumber.decimal($0) } ?? ""
             totalCommission = item.totalCommission.map { PortalNumber.decimal($0) } ?? ""
             totalAdjustments = item.totalAdjustments.map { PortalNumber.decimal($0) } ?? ""
