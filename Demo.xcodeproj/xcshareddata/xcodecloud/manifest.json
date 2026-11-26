@@ -1,0 +1,13 @@
+{
+  "id" : "c8f5f1f1-a6e0-4508-99e2-690b5ba06374",
+  "targets" : [
+    {
+      "id" : "263cf78d-e781-41d4-b450-cafdc2c5231a",
+      "name" : "Demo"
+    },
+    {
+      "id" : "e5d75ee3-6e95-4fe4-8906-d55cdc6b823c",
+      "name" : "Portal"
+    }
+  ]
+}
